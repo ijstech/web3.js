@@ -668,17 +668,19 @@ export function sendTransaction<
 							);
 						}
 
-						if (
-							(_error instanceof InvalidResponseError ||
-								_error instanceof ContractExecutionError ||
-								_error instanceof TransactionRevertWithCustomError ||
-								_error instanceof TransactionRevertedWithoutReasonError ||
-								_error instanceof TransactionRevertInstructionError) &&
-							promiEvent.listenerCount('error') > 0
-						) {
-							promiEvent.emit('error', _error);
+						// if (
+						// 	(_error instanceof InvalidResponseError ||
+						// 		_error instanceof ContractExecutionError ||
+						// 		_error instanceof TransactionRevertWithCustomError ||
+						// 		_error instanceof TransactionRevertedWithoutReasonError ||
+						// 		_error instanceof TransactionRevertInstructionError) &&
+						// 	promiEvent.listenerCount('error') > 0
+						// ) {
+						// 	promiEvent.emit('error', _error);
+						// }
+						if (promiEvent.listenerCount('error') > 0) {
+							promiEvent.emit('error', _error as any);
 						}
-
 						reject(_error);
 					}
 				})() as unknown;
